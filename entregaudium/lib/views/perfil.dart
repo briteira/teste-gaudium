@@ -126,7 +126,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                         child: Column(
                           children: [
                             Image.asset('assets/images/ic_entregas.png', height: 20),
-                            Text("254", style: styleIndicadorTitulo),
+                            Text("${dados?.totalEntregas}", style: styleIndicadorTitulo),
                             Text('Entregas', style: styleIndicadorSubtitulo),
                           ],
                         ),
@@ -142,7 +142,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                               child: Column(
                                 children: [
                                   Image.asset('assets/images/ic_saldo.png', height: 20),
-                                  Text("R\$ 33,50", style: styleIndicadorTitulo),
+                                  Text("R\$ ${dados?.totalSaldoFormatado}", style: styleIndicadorTitulo),
                                   Text('Saldo', style: styleIndicadorSubtitulo),
                                 ],
                               ),
@@ -158,7 +158,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                           child: Column(
                             children: [
                               Image.asset('assets/images/ic_nota.png', height: 20),
-                              Text("4.7", style: styleIndicadorTitulo),
+                              Text("${dados?.nota}", style: styleIndicadorTitulo),
                               Text('Nota', style: styleIndicadorSubtitulo),
                             ],
                           ),
