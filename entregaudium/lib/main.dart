@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:entregaudium/views/perfil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyHomePage(title: 'Entregaudium'),
       debugShowCheckedModeBanner: false,
+      routes: {
+        "/perfil": (context) => const PerfilScreen()
+      }
     );
   }
 }
@@ -74,6 +78,14 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(widget.title, style: const TextStyle(color: Colors.white),),
+        actions: [
+          IconButton(
+              onPressed: (){
+                Navigator.pushNamed(context, "/perfil");
+              },
+              icon: const Icon(Icons.person, color: Colors.white,),
+          )
+        ],
       ),
       body: GoogleMap(
           onMapCreated: _onMapCreated,
