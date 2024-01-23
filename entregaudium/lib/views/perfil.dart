@@ -1,3 +1,5 @@
+import 'package:entregaudium/models/perfil.dart';
+import 'package:entregaudium/services/api_service.dart';
 import 'package:flutter/material.dart';
 
 class PerfilScreen extends StatefulWidget {
@@ -9,8 +11,21 @@ class PerfilScreen extends StatefulWidget {
 
 class _PerfilScreenState extends State<PerfilScreen> {
 
+  //Modelo Perfil para dados carregados
+  Perfil? dados;
+
   //Bool para indicar se a tela está sendo carregada
-  bool loading = false;
+  bool loading = true;
+
+  //Api
+  final ApiService _api = ApiService();
+
+
+  @override
+  void initState() {
+    _loadData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +34,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
     if (loading) {
       body = WidgetLoading();
     } else {
-      body = WidgetPerfil();
+      if (dados == null) {
+        body = WidgetErro();
+      } else {
+        body = WidgetPerfil();
+      }
     }
 
     return Scaffold(
@@ -31,7 +50,26 @@ class _PerfilScreenState extends State<PerfilScreen> {
       body: body
     );
 
+  }
 
+  //Consulta Api
+  _loadData() async {
+    setState(() {
+      loading = true;
+    });
+
+    try {
+      var result = await _api.obterPerfil();
+      if (result?.success == "true") {
+        dados = result?.response;
+      }
+      loading = false;
+    } catch (e) {
+      loading = false;
+    }
+    setState(() {
+
+    });
   }
 
   //Widgets
@@ -57,8 +95,8 @@ class _PerfilScreenState extends State<PerfilScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("Nome", style: styleNome,),
-                      Text("Cargo",style: styleCargo,),
+                      Text("${dados?.nome}", style: styleNome,),
+                      Text("${dados?.cargo}",style: styleCargo,),
                     ],
                   ),
                 ),
@@ -74,7 +112,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                Text("${dados?.descricao}",
                   style: styleDescricao,
                 ),
                 const SizedBox(
@@ -156,7 +194,9 @@ class _PerfilScreenState extends State<PerfilScreen> {
               height: 16,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                _loadData();
+              },
               child: const Text("Tentar novamente"),
             )
           ],

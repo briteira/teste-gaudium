@@ -2,7 +2,8 @@
     <application
         android:label="Entregaudium"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_winged_shoe">
+        android:icon="@mipmap/ic_winged_shoe"
+        android:enableOnBackInvokedCallback="true">
 
         <!-- TODO: Add your Google Maps API key here -->
         <meta-data android:name="com.google.android.geo.API_KEY"
